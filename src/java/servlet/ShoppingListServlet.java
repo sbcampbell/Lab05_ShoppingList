@@ -6,6 +6,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,9 +46,27 @@ public class ShoppingListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+        String action = (String) request.getParameter("action");
         String user = request.getParameter("username");
+        ArrayList<String> itemList = new ArrayList<>();
 
-        session.setAttribute("username", user);
+        switch (action) {
+            case "register":
+                session.setAttribute("username", user);
+                break;
+            case "add":
+                String item = request.getParameter("addItem");
+                itemList.add(item);
+                session.setAttribute("itemList", itemList);
+                break;
+            case "delete":
+                String deleteItem = request.getParameter("item");
+                itemList.remove(deleteItem);
+                session.setAttribute("itemList", itemList);
+                break;
+            default:
+                break;
+        }
         getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
     }
 }

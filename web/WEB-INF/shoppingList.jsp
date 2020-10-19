@@ -21,15 +21,17 @@
         <h2>List</h2>
 
         <form method="post" action="">
-            <label for="additem">Add item:</label>
-            <input type="text" name="additem">
-            <input type="submit" value="Add">
+            <label for="addItem">Add item:</label>
+            <input type="text" name="addItem">
+            <input type="submit" value="add">
             <input type="hidden" name="action" value="add">
         </form>
 
         <form action="" method="post">
             <ul>
-
+                <c:forEach var="item" items="${itemList}">
+                    <li><input type="radio" name="item" value="${item}">${item}</li>
+                </c:forEach>
             </ul>
             <input type="submit" value="Delete">
             <input type="hidden" name="action" value="delete">
